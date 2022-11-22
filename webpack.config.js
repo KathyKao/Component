@@ -5,10 +5,10 @@ const webpack = require("webpack");
 module.exports = {
   mode: process.env.NODE_ENV,
   context: path.resolve(__dirname, "./src"), // 用來統一定義 entry 資料夾
-  entry: {
-    index: "./js/index.js",
-    //about: "./js/about.js",
-  },
+  // entry: {
+  //   index: "./js/index.js",
+  //   about: "./js/about.js",
+  // },
   output: {
     path: path.resolve(__dirname, "./dist"), // 預設就是 dist 資料夾
     filename: "./js/[name].js", // [name] 會依照 entry 的 Object(Key) 來更改 output
@@ -17,6 +17,16 @@ module.exports = {
     compress: true,
     port: 3000,
     // hot: true, // 預設 HMR 就是 true
+  },
+  resolve: {
+    modules: [
+      path.resolve("src"),
+      path.resolve("src/js"),
+      path.resolve("src/js/object"),
+      path.resolve("src/scss"),
+      path.resolve("node_modules"),
+    ],
+    extensions: [".js"],
   },
   module: {
     rules: [

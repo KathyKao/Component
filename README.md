@@ -109,3 +109,7 @@ use: "babel-loader",
 {
 "presets": ["@babel/preset-env"]
 }
+
+---------- resolve ----------
+在 webpack 加上 resolve 物件時, modules 屬性設定引入模塊可以省略路徑, extensions 設定可以省略副檔名
+建議除了 .js 以外的副檔名不要設 extensions
