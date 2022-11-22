@@ -4,10 +4,22 @@
 }
 
 h1{
-    color: red;
+    color: blue;
     font-size: 50px;
     box-shadow: 1px 1px 5px black;
     > span {
         font-size: 12px;
     }
+}
+
+#box{
+    width: 300px;
+    height: 300px;
+    background-image: url('S__29802676.jpg');
+}
+
+#box1{
+    width: 300px;
+    height: 300px;
+    background-image: url('3F_lr_003.jpg');
 }

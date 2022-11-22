@@ -113,3 +113,8 @@ use: "babel-loader",
 ---------- resolve ----------
 在 webpack 加上 resolve 物件時, modules 屬性設定引入模塊可以省略路徑, extensions 設定可以省略副檔名
 建議除了 .js 以外的副檔名不要設 extensions
+
+---------- url-loader ----------
+會將過小的圖片轉換成 base64 格式來使用, 來減少實體檔案載入造成的負擔
+
+> > npm install url-loader --save-dev
