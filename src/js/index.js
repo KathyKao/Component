@@ -2,8 +2,10 @@ import "index.scss";
 import "index.html";
 import item from "item";
 
+console.log($("#box"));
+console.log("jQuery", jQuery("#box"));
+console.log("window.jQuery", window.jQuery("#box"));
 console.log(item);
-
 console.log("hello world");
 
 // ES6 解構 / rest operator , Babel 會幫我們轉譯

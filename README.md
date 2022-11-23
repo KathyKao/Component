@@ -234,5 +234,54 @@ plugins: [
 }
 ```
 
+#### ProvidePlugin
+
+可以讓每支 JS 不用去 import 第三方套件就可以全域取得
+原本就在 webpack 裡面的一個功能, 直接抓取模組使用, 常見例子 jquery
+非必要盡量不要使用這個做法, 會失去模組化的意義
+
+```
+const webpack = require('webpack');
+
+module.exports = {
+	// 部分省略
+plugins: [
+      new webpack.ProvidePlugin({
+         $: "jquery",
+         jQuery: "jquery",
+         "window.jQuery": "jquery",
+      }),
+    ],
+	// 部分省略
+}
+
+```
+
+#### HtmlWebPlugin
+
+#### Vendor & Entry
+
+將 node_modules 透過 Vendor.js 獨立出來可以更有效率進行打包, 自己寫的 JS 則是打包在 Entry.js
+
+```
+// webpack.config.js
+module.exports = {
+	// 部分省略
+	optimization: {
+	    splitChunks: {
+	      cacheGroups: {
+	        vendor: {
+	          test: /node_modules/,
+	          name: "vendor",
+	          chunks: "initial",
+	          enforce: true,
+	        },
+	      },
+	    },
+	  },
+	// 部分省略
+}
+```
+
 > > 參考
 > > https://www.notion.so/Webpack-24263c885633443ca558cf8b423e73d4

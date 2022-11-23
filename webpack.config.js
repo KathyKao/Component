@@ -1,8 +1,8 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -31,6 +31,18 @@ module.exports = {
       path.resolve("node_modules"),
     ],
     extensions: [".js"],
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /node_modules/,
+          name: "vendor",
+          chunks: "initial",
+          enforce: true,
+        },
+      },
+    },
   },
   module: {
     rules: [
@@ -144,11 +156,10 @@ module.exports = {
     new CleanWebpackPlugin({
       verbose: true,
     }),
-    // new webpack.ProvidePlugin(
-    //   $: "jquery",
-    //   jQuery: "jquery",
-    //   "window.jQuery": "jquery",
-    //   "window.$": "jquery",
-    // }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery",
+    }),
   ],
 };
