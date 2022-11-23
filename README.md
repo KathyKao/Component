@@ -283,5 +283,16 @@ module.exports = {
 }
 ```
 
+#### 檔案打包與排除
+
+設置 include / exclude 可以提升一定程度的打包效率
+include: 表示哪些目錄中的文件需要進行 loader 轉換
+exclude: 表示哪些目錄中的文件不需要進行 loader 轉換
+
+#### local 連線 dev server 的 host 設定
+
+在同個區域網路下手機可以連線測試
+在 package.json 加入 npm script 執行語法 --host 192.168.1.12
+
 > > 參考
 > > https://www.notion.so/Webpack-24263c885633443ca558cf8b423e73d4

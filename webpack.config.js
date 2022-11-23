@@ -96,21 +96,24 @@ module.exports = {
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"], // Loader 執行順序是從後面依序執行到前面
+        include: path.resolve("src/css"),
+        exclude: path.resolve("./node_modules"),
       },
       {
         test: /\.(sass|scss)$/,
-
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
           "sass-loader",
         ],
+        include: path.resolve("src/scss"),
+        exclude: path.resolve("./node_modules"),
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/, // 排除 node_modules 底下資料夾
         use: "babel-loader",
+        exclude: path.resolve("./node_modules"), // 排除 node_modules 底下資料夾
       },
       // // webpack5 改使用 asset module
       // {
