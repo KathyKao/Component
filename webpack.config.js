@@ -1,6 +1,8 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -25,13 +27,15 @@ module.exports = {
       path.resolve("src/js/object"),
       path.resolve("src/scss"),
       path.resolve("src/images"),
+      path.resolve("src/fonts"),
       path.resolve("node_modules"),
     ],
     extensions: [".js"],
   },
   module: {
     rules: [
-      // webpack5 改使用 asset module
+      // file-loader: 當 JS / CSS 要讀取其他檔案類型, 需要透過 file-loader 去辨別搬移檔案
+      // webpack5 建議使用 asset module
       {
         test: /\.html$/,
         type: "asset/resource",
@@ -39,7 +43,14 @@ module.exports = {
           filename: "[path][name][ext]",
         },
       },
-      // webpack4 寫法
+      {
+        test: /\.(woff|woff2|ttf|eot)$/,
+        type: "asset/resource",
+        generator: {
+          filename: "[path][name]_[hash:8][ext]",
+        },
+      },
+      // // webpack5 使用 file-loader
       // {
       //   // 不需要 html-loader, 因為 html 本來就不需要轉換格式
       //   // file-loader 幫我們做 html 搬移的動作
@@ -48,12 +59,27 @@ module.exports = {
       //     {
       //       loader: "file-loader",
       //       options: {
+      //         esModule: false,
       //         // [路徑][檔名].[副檔名]
       //         // path 抓到 dist 根目錄
       //         name: "[path][name].[ext]",
       //       },
       //     },
       //   ],
+      //   type: "javascript/auto",
+      // },
+      // {
+      //   test: /\.(woff|woff2|ttf|eot)$/,
+      //   use: [
+      //     {
+      //       loader: "file-loader",
+      //       options: {
+      //         esModule: false,
+      //         name: "[path][name]_[hash:8].[ext]",
+      //       },
+      //     },
+      //   ],
+      //   type: "javascript/auto",
       // },
       {
         test: /\.css$/,
@@ -91,15 +117,16 @@ module.exports = {
           filename: "[path][name][ext]?[hash:8]",
         },
       },
-      // // webpack4 寫法
+      // // webpack5 使用 url-loader
       // {
       //   test: /\.(jpe?g|png|gif)$/,
       //   use: [
       //     {
       //       loader: "url-loader",
       //       options: {
-      //         limit: 8192, // 檔案小於 8192 kb, 會轉成 base64 資料
-      //         name: "[path][name].[ext]?[hash:8]", // hash 亂數避免瀏覽器快取問題
+      //         esModule: false,
+      //         limit: 1000 * 1024, // 檔案小於 1000 kb, 會轉成 Base64 資料
+      //         name: "[path][name]_[hash:8].[ext]", // hash 亂數避免瀏覽器快取問題
       //       },
       //     },
       //   ],
@@ -111,7 +138,13 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "./css/[name].css",
     }),
-    // new webpack.ProvidePlugin({
+    new CopyWebpackPlugin({
+      patterns: [{ from: "assets", to: "assets" }], // from: 起始資料夾, to: 搬移的資料夾
+    }),
+    new CleanWebpackPlugin({
+      verbose: true,
+    }),
+    // new webpack.ProvidePlugin(
     //   $: "jquery",
     //   jQuery: "jquery",
     //   "window.jQuery": "jquery",
