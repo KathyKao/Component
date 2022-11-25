@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -48,13 +49,13 @@ module.exports = {
     rules: [
       // file-loader: 當 JS / CSS 要讀取其他檔案類型, 需要透過 file-loader 去辨別搬移檔案
       // webpack5 建議使用 asset module
-      {
-        test: /\.html$/,
-        type: "asset/resource",
-        generator: {
-          filename: "[path][name][ext]",
-        },
-      },
+      // {
+      //   test: /\.html$/,
+      //   type: "asset/resource",
+      //   generator: {
+      //     filename: "[path][name][ext]",
+      //   },
+      // },
       {
         test: /\.(woff|woff2|ttf|eot)$/,
         type: "asset/resource",
@@ -163,6 +164,21 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery",
       "window.jQuery": "jquery",
+    }),
+    // 因為使用 HtmlWebpackPlugin, 在 index.js 可以移除 import "index.html" 和移除 .html 的 file-loader 設定
+    new HtmlWebpackPlugin({
+      title: "Webpack 前端自動化開發", // 模板 html 裡的 title
+      filename: "index.html", // 模板輸出出去的檔名
+      template: "html/index.html", // 模板位置
+      viewport: "width=device-width, initial-scale=1.0", // 模板 html 裡的 meta viewport
+      chunks: ["index"], // 自動把 enrty 裡對應的 JS name 載入
+    }),
+    new HtmlWebpackPlugin({
+      title: "about",
+      filename: "about.html",
+      template: "html/about.html",
+      viewport: "width=device-width, initial-scale=1.0",
+      chunks: ["about"],
     }),
   ],
 };

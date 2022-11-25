@@ -1,5 +1,5 @@
 import "index.scss";
-import "index.html";
+// import "index.html";
 import item from "item";
 
 console.log($("#box"));
@@ -7,6 +7,15 @@ console.log("jQuery", jQuery("#box"));
 console.log("window.jQuery", window.jQuery("#box"));
 console.log(item);
 console.log("hello world");
+
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+const p1 = new Person("Kathy", 34);
 
 // ES6 解構 / rest operator , Babel 會幫我們轉譯
 const [a, b, ...c] = [1, 2, 3, 4];

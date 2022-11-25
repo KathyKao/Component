@@ -259,6 +259,14 @@ plugins: [
 
 #### HtmlWebPlugin
 
+可以透過模板的方式讓 webpack 幫我們產生 html 檔案
+
+```
+npm install html-webpack-plugin --save-dev
+```
+
+<%= htmlWebpackPlugin.options.[參數] %> 透過這方式去接收 webpack 帶過來的參數
+
 #### Vendor & Entry
 
 將 node_modules 透過 Vendor.js 獨立出來可以更有效率進行打包, 自己寫的 JS 則是打包在 Entry.js
